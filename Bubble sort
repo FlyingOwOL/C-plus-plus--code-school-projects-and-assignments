@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+int nums[11];
+int main()
+{
+    for(int x; x<11; x++)
+    {
+        cin>>nums[x];
+    }
+    for(int x;x<11;x++)
+    {
+        cout<< nums[x]<<",";
+    }
+    cout << endl;
+    for(int x=0;x<11;x++)
+    {
+        for(int y=x;y<11;y++)
+        {
+            if(nums[x]>=nums[y+1])
+            {
+                nums[11]=nums[x];
+                nums[x]=nums[y+1];
+                nums[y+1]=nums[11];
+            }
+        }
+    }
+    for(x=0;x<11;x++)
+    {
+        cout<<nums[x]<<",";
+    }
+    return 0;
+}
