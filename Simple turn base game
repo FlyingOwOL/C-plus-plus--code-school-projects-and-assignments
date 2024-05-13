@@ -1,0 +1,73 @@
+#include <iostream>
+using namespace std;
+int ballsleft =14;
+int Player;
+int Marky220;
+int main()
+{
+    cout << "Marky: Welcome to Marky's Amazing Ball Suckers"<<endl;
+    cout << "Marky:Here we have 14 balls, the rule is whoever is  left with 1 ball on their turn they lose"<<endl;
+    cout << "Marky:You can only take take 1, 2, or 3. Any more and I will steal your leg"<<endl;
+    do
+    {
+        for(int i=0; i<ballsleft;i++)
+        {
+            cout <<"["<<i+1<<"] ";
+        }
+        cout << endl;
+        if(ballsleft==14)
+        {
+            cout<<"Marky:I'll be going first, I take 1 ball"<<endl;
+            ballsleft--;
+        }
+        else
+        {
+            if(ballsleft%2==0&&ballsleft<=0)
+            {
+                cout <<"You win"<<endl;
+                break;
+            }
+            else if(ballsleft%1==0&&ballsleft<=1)
+            {
+                cout <<"You lose"<<endl;
+                break;
+            }
+            else
+            {
+                cout<<"End round"<<endl;
+            }
+            cout<<"Player: ";
+            cin>>Player;
+            switch(Player)
+            {
+                case 1:
+                Marky220=4-Player;
+                cout <<"Marky: I take "<< Marky220<<endl;
+                break;
+                case 2:
+                Marky220=4-Player;
+                cout <<"Marky: I take "<< Marky220<<endl;
+                break;
+                case 3:
+                Marky220=4-Player;
+                cout <<"Marky: I take "<< Marky220<<endl;
+                break;
+                default:
+                cout <<"Announcer:Invalid number"<<endl;
+            }
+            if(Player<4&&Player>0)
+            {
+                ballsleft=ballsleft-(Player+Marky220);
+            }
+            cout<<"Announcer: There are "<< ballsleft <<endl;
+        }
+    }while(ballsleft>=0);
+    return 0;
+}
+
+
+
+
+
+
+
