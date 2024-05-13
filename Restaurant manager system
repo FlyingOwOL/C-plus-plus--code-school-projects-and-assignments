@@ -1,0 +1,415 @@
+#include <iostream>
+using namespace std;
+int AingredientsNum[12] = { 100 ,100 ,100 ,100 ,100 ,100 ,100,100,100,100,100 };
+string AingredientsName[12] = { "Oil", "Salt", "Pepper", "Chicken", "Paprika", "Curry Powder", "Flour", "Tomato Sauce", "Pepperoni","Cheese", "Mushroom" };
+void checkInventory() //Displays inventory
+{
+    system("clear");
+    for (int x = 0; x < 11; x++) { //Sorts inventory from least to greatest
+        for (int y = x; y < 11; y++) {
+            if (AingredientsNum[x] >= AingredientsNum[y + 1]) {
+                AingredientsNum[11] = AingredientsNum[x]; //ingredient quantity
+                AingredientsNum[x] = AingredientsNum[y + 1];
+                AingredientsNum[y + 1] = AingredientsNum[11];
+
+                AingredientsName[11] = AingredientsName[x]; //ingredient name
+                AingredientsName[x] = AingredientsName[y + 1];
+                AingredientsName[y + 1] = AingredientsName[11];
+            }
+        }
+    }
+    for (int x = 0; x < 11; x++)
+    {
+        cout << x + 1 << "." << AingredientsName[x] << "[" << AingredientsNum[x] << "]" << endl;
+    }
+}
+int minusRestock;
+int RestockInventory()
+{
+    int RestockPrice = 0;
+    int RestockPriceTotal=0;
+    for (int x = 0; x < 11; x++)
+    {
+        if (AingredientsNum[x] < 100) // 
+        {
+            RestockPrice = 100 - AingredientsNum[x]; //Gives missing amount per ingredient
+            RestockPriceTotal = RestockPriceTotal + RestockPrice; //adds up all missing ingredients
+            AingredientsNum[x] = AingredientsNum[x] + RestockPrice; //Restocks ingredients back to original
+        }
+    }
+    minusRestock=RestockPriceTotal;
+    
+    return RestockPriceTotal;
+}
+int orderFrequency[4];
+string orderName[4]={"Chicken","Spaghetti","Pizza"};
+int orderGrossProfit[4];
+
+void SalesReport(int z) 
+{
+    system("clear");
+    double grossProfit=0;
+    double tax=0;
+    if(z==1)
+    {
+        for(int y=0; y<3;y++) //sorts for most frequently ordered
+        {
+            for(int x=y; x<3;x++)
+            {
+                if(orderFrequency[x]<orderFrequency[x+1])
+                {
+                    orderFrequency[3]=orderFrequency[x];
+                    orderFrequency[x]=orderFrequency[x+1];
+                    orderFrequency[x+1]=orderFrequency[3];
+                    
+                    orderName[3]=orderName[x];
+                    orderName[x]=orderName[x+1];
+                    orderName[x+1]=orderName[3];
+                    
+                    orderGrossProfit[3]=orderGrossProfit[x];
+                    orderGrossProfit[x]=orderGrossProfit[x+1];
+                    orderGrossProfit[x+1]=orderGrossProfit[3];
+                }
+            }
+        }
+        cout<<"Rank| Item name|Gross Profit|  Frequency|"<<endl;
+        for(int x=0;x<3;x++)
+        {
+            cout<<x+1<<".     "<<orderName[x]<<"       ₱"<<orderGrossProfit[x]<<"      "<<orderFrequency[x]<<"x"<<endl;
+        }
+    }
+    else if(z==2)
+    {
+        for(int y=0; y<3;y++) //sorts for most gross profit
+        {
+            for(int x=y; x<3;x++)
+            {
+                if(orderGrossProfit[x]<orderGrossProfit[x+1])
+                {
+                    orderFrequency[3]=orderFrequency[x];
+                    orderFrequency[x]=orderFrequency[x+1];
+                    orderFrequency[x+1]=orderFrequency[3];
+                    
+                    orderName[3]=orderName[x];
+                    orderName[x]=orderName[x+1];
+                    orderName[x+1]=orderName[3];
+                    
+                    orderGrossProfit[3]=orderGrossProfit[x];
+                    orderGrossProfit[x]=orderGrossProfit[x+1];
+                    orderGrossProfit[x+1]=orderGrossProfit[3];
+                }
+            }
+        }
+        cout<<"Rank| Item name|Gross Profit|  Frequency|"<<endl;
+        for(int x=0;x<3;x++)
+        {
+            cout<<x+1<<".     "<<orderName[x]<<"          ₱"<<orderGrossProfit[x]<<"      "<<orderFrequency[x]<<"x"<<endl;
+        }
+    }
+    else
+    {
+        cout <<"Exiting..."<<endl;
+    }
+    for(int x=0; x<3;x++)
+    {
+        grossProfit=grossProfit+orderGrossProfit[x];
+    }
+    cout << "Gross profit:₱"<<grossProfit<<endl;
+    cout << "Tax:₱"<<grossProfit*.12<<endl;
+    cout << "Profit after restock:₱"<<grossProfit-minusRestock<<endl;
+    tax=grossProfit*.12;
+    cout << "Total Profit:₱"<<grossProfit-(tax+minusRestock)<<endl;
+}
+string paymentMode(int x) 
+{
+    string mode;
+    switch(x)
+    {
+        case 1:
+            mode = "Cash";
+            break;
+        case 2:
+            mode = "Card";
+            break;
+        case 3:
+            mode = "Gcash";
+            break;
+    }
+    return mode; 
+}
+int Mode;
+int ChefmakeChicken(int x)//Chicken order
+{
+    int ingredient = 0;
+    while (AingredientsName[ingredient] != "Oil")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Salt")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Pepper")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Chicken")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Paprika")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Curry Powder")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    x = x * 50;
+    return x;
+}
+int ChefmakeSpaghetti(int x) //Spaghetti order
+{
+    int ingredient = 0;
+    while (AingredientsName[ingredient] != "Oil")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Salt")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Flour")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Tomato Sauce")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Cheese")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Mushroom")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 2 * x;
+    ingredient = 0;
+    x = x * 70;
+    return x;
+}
+int ChefmakePizza(int x) //Pizza order
+{
+    int ingredient = 0;
+    while (AingredientsName[ingredient] != "Flour") //Search and increment
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 4 * x; //delete the heathen
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Tomato Sauce")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 6 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Cheese")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 10 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Pepperoni")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 5 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Mushroom")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 5 * x;
+    ingredient = 0;
+    while (AingredientsName[ingredient] != "Oil")
+    {
+        ingredient++;
+    }
+    AingredientsNum[ingredient] = AingredientsNum[ingredient] - 1 * x;
+
+    x = x * 120;
+    return x;
+}
+int main()
+{
+    int userMenuInput;
+    while (true) 
+    {
+        system("clear");
+        cout << "Welcome!!\n1.Staff\n2.Customer?\n";
+        cin >> userMenuInput;
+        system("clear");
+        switch (userMenuInput)
+        {
+        case 1:
+            int userInputStaff;
+            do
+            {
+                cout << "---------------------------\nWelcome back, Mister Staff.\nWhat would it be today?" << endl;
+                cout << "     /]_/]  " << endl;
+                cout << "   / ( o.o )  " << endl;
+                cout << "  (  > ^ <  )" << endl;
+                cout << "   ]_(___)_/" << endl;
+                cout << "---------------------------\n1.Check Inventory\n2.Sales Report\n3.Log out\n---------------------------" << endl;
+                cout << "Enter the number corresponding to your choice: ";                
+                cin >> userInputStaff;
+                switch (userInputStaff)
+                {
+                case 1:
+                    checkInventory();
+                    cout << "--------------------Restock?-------------------------\n               1.Yes       2.No\nEnter the number corresponding to your choice: " << endl;
+                    cin >> userInputStaff;
+                    if (userInputStaff == 1)
+                    {
+                        system("clear");
+                        RestockInventory();
+                    }            
+                    break;
+                case 2:
+                    int x=0;
+                    do
+                    {
+                        cout << "Would you like to sort by:\n1. Frequency\n2. GrossProfit\n3. Exit\nEnter number to select:";
+                        cin >> x;
+                        SalesReport(x);
+                    }while(x!=3);    
+                    break;
+                }
+            } while (userInputStaff != 3);
+            break;
+        case 2:
+            int userInputCustomer;
+            double TotalorderCost;
+            int z; 
+            int y;
+            int x;
+            do
+            {
+                system("clear");
+                cout<<"╔═══════════════════════════════════╗"<<endl;
+                cout<<"   Welcome to Retro Bites Diner"<<endl;
+                cout<<"╚═══════════════════════════════════╝"<<endl;
+                cout << "welcome to Retro Bites Diner\nWhat would you like?" << endl;
+                cout << "1.Chicken-₱50\n2.Spaghetti-₱70\n3.Pizza-₱120\n4.End order" << endl;
+                cin >> userInputCustomer;
+                switch (userInputCustomer)
+                {
+                case 1:             
+                    cout << "Give quantity:";
+                    cin >> z;
+                    cout << "You ordered" << z << " Chicken- Price" << ChefmakeChicken(z) << endl;
+                    TotalorderCost=TotalorderCost+ChefmakeChicken(z);
+                    orderFrequency[0]=z;
+                    orderGrossProfit[0]=z*50;
+                    break;
+                case 2:                 
+                    cout << "Give quantity:";
+                    cin >> y;
+                    cout << "You ordered" << y << " Spaghetti- Price:" << ChefmakeSpaghetti(y) << endl;
+                    TotalorderCost=TotalorderCost+ChefmakeSpaghetti(y);
+                    orderGrossProfit[1]=y*70;
+                    orderFrequency[1]=y;
+                    break;
+                case 3:
+                    cout << "Give quantity:";
+                    cin >> x;
+                    cout << "You ordered " << x << " Pizza- Price" << ChefmakePizza(x) << endl;
+                    TotalorderCost=TotalorderCost+ChefmakePizza(x);
+                    orderFrequency[2]=x;
+                    orderGrossProfit[2]=x*120;
+                    break;
+                case 4:
+                    cout << "Exiting" << endl;
+                    break;
+                default:
+                    cout << "Exiting" << endl;
+                }
+            } while (userInputCustomer != 4);
+            cout << "Pick Mode of Payment\n1. Cash\n2. Card \n3. Gcash\nEnter number corresponding to your choice:";
+            cin>> Mode;
+            if(userInputCustomer==1||userInputCustomer==2||userInputCustomer==3||userInputCustomer==4)
+            {
+                cout<<"------------------------------------------------------"<<endl;
+                cout<<"                    Receipt                           "<<endl;
+                cout<<"------------------------------------------------------"<<endl;
+                cout<<"                                                      "<<endl;
+                cout<<"Date: Tara oh"<<endl;
+                cout<<"Time: Hanggang 10 PM"<<endl;
+                cout<<"Receipt Number: [Receipt Number]"<<endl;
+                cout<<"                                                      "<<endl;
+                cout<<"Items Purchased:"<<endl;
+                if(x>0)
+                {
+                    cout<<"Pizza-"<<x<<"x                 ₱"<<ChefmakePizza(x)<<endl;
+                }
+                if(y>0)
+                {
+                    cout<<"Spaghetti-"<<y<<"x             ₱"<<ChefmakeSpaghetti(y)<<endl;
+                }
+                if(z>0)
+                {
+                    cout<<"Chicken-"<<z<<"x               ₱"<<ChefmakeChicken(z)<<endl;
+                }
+                cout<<"   ..."<<endl;
+                cout<<""<<endl;
+                cout<<"Subtotal:               ₱"<<TotalorderCost<<endl;
+                cout<<"Tax:                    ₱"<<TotalorderCost*.12<<endl;
+                cout<<"Total:                  ₱"<<TotalorderCost+TotalorderCost*.12<<endl;
+                cout<<""<<endl;
+                cout<<"Payment Method:         "<<paymentMode(Mode)<<endl;
+                cout<<"Amount Paid:            ₱"<<TotalorderCost+TotalorderCost*.12<<endl;
+                cout<<"Change Due:             ₱[Change na po tayo this 2024]"<<endl;
+                cout<<""<<endl;
+                cout<<"Thank you for your purchase!"<<endl;
+                cout<<""<<endl;
+                cout<<"------------------------------------------------------"<<endl;
+            }
+            else
+            {
+                cout<<"If you're not gonna order, please get out"<<endl; 
+            }
+            cin>>userInputCustomer;
+        TotalorderCost=0;
+        z=0;
+        x=0;
+        y=0;
+            break;
+        default:
+            cout << "Invalid input" << endl;
+        }
+    }
+}
