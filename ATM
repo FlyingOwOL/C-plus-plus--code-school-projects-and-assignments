@@ -1,0 +1,96 @@
+#include <iostream>
+using namespace std;
+string accNames[5];
+int newPasswords[5];
+int savedPasswords[5];
+int balance[5];
+int counter=0;
+int userAccInput;
+int userPassInput;
+int main()
+{
+    while(true){
+        string userInput;
+        cout<<"Do you have an ATM account? yes or no" <<endl;
+        cout<<"type exit to leave:";
+        cin >> userInput;
+        if(userInput == "yes")
+        {
+            string exitloop;
+            cout << "Enter your Card number:"<<endl;
+            cin >> userAccInput;
+            cout << "Enter password"<<endl;
+            do{
+                cin >> userPassInput;
+                if(savedPasswords[userAccInput]==userPassInput)
+                {
+                    bool isTrue=true;
+                    while(isTrue)
+                    {
+                        int result;
+                        int userNewInput;
+                        cout << "Welcome back "<<accNames[userAccInput]<<endl;
+                        cout << "1.View Balance"<<endl;
+                        cout << "2.Deposite"<<endl;
+                        cout <<"3.withdraw"<<endl;
+                        cout <<"4.log out"<<endl;
+                        cin >> userPassInput;
+                        switch(userPassInput)
+                        {
+                            case 1:
+                                cout <<"Current balance:"<< balance[userAccInput]<<endl;
+                            break;
+                            case 2:
+                                cout <<"Enter amount to deposite";
+                                cin >> userNewInput;
+                                balance[userAccInput]=balance[userAccInput]+userNewInput;
+                                cout <<"New balance: "<< balance[userAccInput]<<endl;
+                            break; 
+                            case 3:
+                                cout <<"Put amount to withdraw:";
+                                cin >> userInput;
+                                balance[userAccInput]=balance[userAccInput]-userNewInput;
+                                cout << "New balance: "<< balance[userAccInput]<<endl;
+                            break;
+                            case 4:
+                                isTrue=false;
+                            break;
+                            default:
+                            cout << "Invalid Input"<<endl;
+                        }
+                    }
+                }
+                else
+                {
+                    cout << "Wrong password"<<endl;
+                }
+                cout << "Do you have another transaction? type yes or no"<<endl;
+                cin >> exitloop;
+            }while(exitloop != "no");
+        }
+        else if (userInput =="no")
+        {
+            cout << "Enter your new account name:";
+            cin >> accNames[counter];
+            cout << "Make a password:";
+            cin >> newPasswords[counter];
+            savedPasswords[counter]=newPasswords[counter];
+            cout << "Enter your initial balance:";
+            cin >> balance[counter];
+            cout << endl<< "You have successfully made an account!"<<endl;
+            cout << "Account name:" << accNames[counter] << endl;
+            cout << "Initial balance:" << balance[counter] << endl;
+            cout << "Card Number:"<<counter<<endl;
+            counter +=1;
+        }
+        else if (userInput=="exit")
+        {
+            break;
+        }
+        else
+        {
+            cout << "Invalid answer" << endl;
+        }
+    }    
+    return 0;
+}
